@@ -1,10 +1,26 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JS
+@inject CurrentUser currentUser
+@inject NavigationManager navManager;
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            if (!currentUser.IsLoggedIn)
+            {
+                var cookieJson = await JS.InvokeAsync<string>("KTCookie.getCookie", "helpukraineUser");
+                if (!string.IsNullOrEmpty(cookieJson))
+                {
+                    CurrentUser cookieUser = JsonConvert.DeserializeObject<CurrentUser>(cookieJson);
+                    currentUser.Id = cookieUser.Id;
+                    currentUser.FirstName = cookieUser.FirstName;
+                    currentUser.LastName = cookieUser.LastName;
+                    currentUser.Roles = cookieUser.Roles;
+                    currentUser.IsLoggedIn = true;
+                    navManager.NavigateTo("/");
+                }
+            }
             await JS.InvokeVoidAsync("releaseHold");
         }
     }

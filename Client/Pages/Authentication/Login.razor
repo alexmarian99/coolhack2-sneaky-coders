@@ -49,6 +49,7 @@
                 currentUser.LastName = userDetails.last_name;
                 currentUser.Roles = userDetails.roles;
                 currentUser.IsLoggedIn = true;
+                await JS.InvokeVoidAsync("KTCookie.setCookie", "helpukraineUser", JsonConvert.SerializeObject(currentUser));
                 navManager.NavigateTo("/");
             }
             else
