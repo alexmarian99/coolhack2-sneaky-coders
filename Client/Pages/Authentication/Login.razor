@@ -55,12 +55,12 @@
             else
             {
                 errorMessage = localizer["Invalid credentials"];
-                await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occured!"].ToString(), localizer["Okey, got it!"].ToString());
+                await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occurred!"].ToString(), localizer["Okey, got it!"].ToString());
             }
         }
         else
         {
-            await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occured!"].ToString(), localizer["Okey, got it!"].ToString());
+            await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occurred!"].ToString(), localizer["Okey, got it!"].ToString());
         }
     }
 
