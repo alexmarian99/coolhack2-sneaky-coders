@@ -1,0 +1,27 @@
+﻿@page "/auth"
+@layout NoLayout
+@inject IJSRuntime JS
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("KTLogin.init");
+        }
+    }
+
+}
+<HeadContent>
+    <link href="assets/css/pages/login/classic/login-3.css?v=7.0.5" rel="stylesheet" type="text/css" />
+</HeadContent>
+
+<div class="login login-3 login-signin-on d-flex flex-row-fluid" id="kt_login">
+    <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid" style="background-image: url(assets/media/bg/bg-1.jpg);">
+        <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
+            <Login />
+            <Signup />
+            <ForgotPassword />
+        </div>
+    </div>
+</div>
