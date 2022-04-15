@@ -20,7 +20,7 @@
             if (value != _language)
             {
                 Console.WriteLine(value);
-                if (!string.IsNullOrEmpty(_language))
+                if (!string.IsNullOrEmpty(value))
                 {
                     UriHelper.NavigateTo($"/Culture/{value}", true);
                 }
@@ -31,15 +31,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        selectedLanguage = await JS.InvokeAsync<string>("getLanguage");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JS.InvokeVoidAsync("initSelect2", "country", localizer["Select language"]);
-        }
+        //selectedLanguage = await JS.InvokeAsync<string>("getLanguage");
     }
 
     public async void SignIn()
@@ -101,7 +93,7 @@
         <p class="opacity-60 font-weight-bold">@localizer["Please enter account details to log in in control panel"]</p>
         <div class="form-group row">
             <div class=" col-lg-4 col-md-9 col-sm-12">
-                <select class="form-control select2" id="country" name="param" @bind="@selectedLanguage" @bind:event="onchange">
+                <select class="form-control" id="country" @bind="selectedLanguage">
                     <option value="en">@localizer["English"]</option>
                     <option value="ro">@localizer["Romanian"]</option>
                     <option value="uk">@localizer["Ukrainian"]</option>

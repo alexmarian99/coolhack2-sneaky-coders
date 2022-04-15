@@ -1,5 +1,6 @@
 ﻿@inject IStringLocalizer<Login> localizer
 @inject IJSRuntime JS
+@inject Mutations graphQLMutations
 
 @code {
     public string Email { get; set; } = string.Empty;
@@ -14,7 +15,14 @@
     {
         if (ValidateForm())
         {
-
+            graphQLMutations.RunInsertUser(new InsertUserArgs
+            {
+                first_name = FirstName,
+                last_name = LastName,
+                email = Email,
+                password = Password,
+                phone_number = PhoneNumber
+            });
         }
         else
         {
@@ -79,7 +87,7 @@
         return true;
     }
 
-    
+
     public bool ReValidatePassword()
     {
         if (string.IsNullOrEmpty(ConfirmedPassword) || !Password.Equals(ConfirmedPassword))
@@ -121,7 +129,7 @@
             <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Password"] name="password" @bind="Password" @bind:event="onchange" />
         </div>
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Confirm Password"] name="cpassword" @bind="ConfirmedPassword" @bind:event="onchange"/>
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Confirm Password"] name="cpassword" @bind="ConfirmedPassword" @bind:event="onchange" />
         </div>
         <div class="form-group text-left px-8">
             <div class="checkbox-inline">
