@@ -2,26 +2,126 @@
 @inject IJSRuntime JS
 
 @code {
-}
+    public string Email { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string ConfirmedPassword { get; set; } = string.Empty;
+    public string errorMessage = string.Empty;
 
+    public async void SignUp()
+    {
+        if (ValidateForm())
+        {
+
+        }
+        else
+        {
+            await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occured!"].ToString(), localizer["Okey, got it!"].ToString());
+        }
+    }
+
+    public bool ValidateForm()
+    {
+        return ValidateFirstName() && ValidateLastName() && ValidateEmail() && ValidatePassword();
+    }
+
+    public bool ValidateFirstName()
+    {
+        if (string.IsNullOrEmpty(FirstName))
+        {
+            errorMessage = localizer["First Name is required"];
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool ValidateLastName()
+    {
+        if (string.IsNullOrEmpty(LastName))
+        {
+            errorMessage = localizer["Last Name is required"];
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool ValidatePhoneNo()
+    {
+        return true;
+    }
+
+    public bool ValidateEmail()
+    {
+        if (string.IsNullOrEmpty(Email))
+        {
+            errorMessage = localizer["Email is required"];
+            return false;
+        }
+        if (!(Email.Contains("@") && Email.Contains(".")))
+        {
+            errorMessage = localizer["Invalid email"];
+            return false;
+        }
+        return true;
+    }
+
+    public bool ValidatePassword()
+    {
+        if (string.IsNullOrEmpty(Password))
+        {
+            errorMessage = localizer["Password is required"];
+            return false;
+        }
+        return true;
+    }
+
+    
+    public bool ReValidatePassword()
+    {
+        if (string.IsNullOrEmpty(ConfirmedPassword) || !Password.Equals(ConfirmedPassword))
+        {
+            errorMessage = localizer["Password must match! Please try again."];
+            return false;
+        }
+        return true;
+    }
+
+
+}
 <!--begin::Login Sign up form-->
 <div class="login-signup">
     <div class="mb-20">
         <h3>@localizer["Sign up"]</h3>
         <p class="opacity-60">@localizer["Enter your details to create your account"]</p>
     </div>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
     <form class="form text-center" id="kt_login_signup_form">
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder=@localizer["Fullname"] name="fullname" />
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder=@localizer["First Name"] name="firstname" @bind="FirstName" @bind:event="onchange" />
         </div>
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder=@localizer["Email"] name="email" autocomplete="off" />
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder=@localizer["Last Name"] name="lastname" @bind="LastName" @bind:event="onchange" />
         </div>
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Password"] name="password" />
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="tel" placeholder=@localizer["Phone Number"] name="phone" @bind="PhoneNumber" @bind:event="onchange" />
         </div>
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Confirm Password"] name="cpassword" />
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder=@localizer["Email Address"] name="email" autocomplete="off" @bind="Email" @bind:event="onchange" />
+        </div>
+        <div class="form-group">
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Password"] name="password" @bind="Password" @bind:event="onchange" />
+        </div>
+        <div class="form-group">
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder=@localizer["Confirm Password"] name="cpassword" @bind="ConfirmedPassword" @bind:event="onchange"/>
         </div>
         <div class="form-group text-left px-8">
             <div class="checkbox-inline">
@@ -34,7 +134,7 @@
             <div class="form-text text-muted text-center"></div>
         </div>
         <div class="form-group">
-            <button id="kt_login_signup_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3 m-2">@localizer["Sign Up"]</button>
+            <button id="kt_login_signup_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3 m-2" @onclick="SignUp">@localizer["Sign Up"]</button>
             <button id="kt_login_signup_cancel" class="btn btn-pill btn-outline-white font-weight-bold opacity-70 px-15 py-3 m-2">@localizer["Cancel"]</button>
         </div>
     </form>
