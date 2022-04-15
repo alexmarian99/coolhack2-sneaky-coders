@@ -1,9 +1,55 @@
 ﻿@inject IStringLocalizer<Login> localizer
+@inject IJSRuntime JS
 
 @code {
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public bool RememberMe { get; set; } = false;
+    public string errorMessage = string.Empty;
+
+    public async void SignIn()
+    {
+        if (ValidateForm())
+        {
+
+        }
+        else
+        {
+            await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occured!"].ToString(), localizer["Okey, got it!"].ToString());
+        }
+    }
+
+    public bool ValidateForm()
+    {
+        return ValidateEmail() && ValidatePassword();
+    }
+
+    public bool ValidateEmail()
+    {
+        if (string.IsNullOrEmpty(Email))
+        {
+            errorMessage = localizer["Email is required"];
+            return false;
+        }
+        if (!(Email.Contains("@") && Email.Contains(".")))
+        {
+            errorMessage = localizer["Invalid email"];
+            return false;
+        }
+        return true;
+    }
+
+    public bool ValidatePassword()
+    {
+        if (string.IsNullOrEmpty(Password))
+        {
+            errorMessage = localizer["Password is required"];
+            return false;
+        }
+        return true;
+    }
+
+
 }
 
 <!--begin::Login Header-->
@@ -19,6 +65,12 @@
         <h3>@localizer["Sign in"]</h3>
         <p class="opacity-60 font-weight-bold">@localizer["Please enter account details to log in in control panel"]</p>
     </div>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
     <form class="form" id="kt_login_signin_form">
         <div class="form-group">
             <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="email" placeholder="@localizer["Email"]" name="email" autocomplete="off" @bind="Email" @bind:event="onchange" />
@@ -36,7 +88,7 @@
             <a href="javascript:;" id="kt_login_forgot" class="text-white font-weight-bold">@localizer["Forget password"]</a>
         </div>
         <div class="form-group text-center mt-10">
-            <button id="kt_login_signin_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3">@localizer["Sign in"]</button>
+            <button id="kt_login_signin_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3" @onclick="SignIn">@localizer["Sign in"]</button>
         </div>
     </form>
     <div class="mt-10">

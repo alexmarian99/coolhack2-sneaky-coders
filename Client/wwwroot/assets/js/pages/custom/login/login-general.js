@@ -20,35 +20,6 @@ var KTLogin = function() {
     var _handleSignInForm = function() {
         var validation;
 
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validation = FormValidation.formValidation(
-			KTUtil.getById('kt_login_signin_form'),
-			{
-				fields: {
-					username: {
-						validators: {
-							notEmpty: {
-								message: 'Username is required'
-							}
-						}
-					},
-					password: {
-						validators: {
-							notEmpty: {
-								message: 'Password is required'
-							}
-						}
-					}
-				},
-				plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    submitButton: new FormValidation.plugins.SubmitButton(),
-                    //defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
-					bootstrap: new FormValidation.plugins.Bootstrap()
-				}
-			}
-		);
-
         $('#kt_login_signin_submit').on('click', function (e) {
             e.preventDefault();
         });
@@ -70,63 +41,6 @@ var KTLogin = function() {
         var validation;
         var form = KTUtil.getById('kt_login_signup_form');
 
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validation = FormValidation.formValidation(
-			form,
-			{
-				fields: {
-					fullname: {
-						validators: {
-							notEmpty: {
-								message: 'Username is required'
-							}
-						}
-					},
-					email: {
-                        validators: {
-							notEmpty: {
-								message: 'Email address is required'
-							},
-                            emailAddress: {
-								message: 'The value is not a valid email address'
-							}
-						}
-					},
-                    password: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password is required'
-                            }
-                        }
-                    },
-                    cpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password confirmation is required'
-                            },
-                            identical: {
-                                compare: function() {
-                                    return form.querySelector('[name="password"]').value;
-                                },
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    },
-                    agree: {
-                        validators: {
-                            notEmpty: {
-                                message: 'You must accept the terms and conditions'
-                            }
-                        }
-                    },
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
-				}
-			}
-		);
-
         $('#kt_login_signup_submit').on('click', function (e) {
             e.preventDefault();
         });
@@ -141,29 +55,6 @@ var KTLogin = function() {
 
     var _handleForgotForm = function(e) {
         var validation;
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validation = FormValidation.formValidation(
-			KTUtil.getById('kt_login_forgot_form'),
-			{
-				fields: {
-					email: {
-						validators: {
-							notEmpty: {
-								message: 'Email address is required'
-							},
-                            emailAddress: {
-								message: 'The value is not a valid email address'
-							}
-						}
-					}
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap()
-				}
-			}
-		);
 
         // Handle submit button
         $('#kt_login_forgot_submit').on('click', function (e) {
