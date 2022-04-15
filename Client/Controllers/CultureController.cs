@@ -13,7 +13,6 @@ namespace Client.Controllers
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(
                     new RequestCulture(language)));
-
             return Redirect("/");
         }
     }

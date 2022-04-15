@@ -1,10 +1,16 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JS
+@inject CurrentUser user;
+@inject NavigationManager navManager;
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            if (!user.IsLoggedIn)
+            {
+                navManager.NavigateTo("/auth");
+            }
             await JS.InvokeVoidAsync("releaseHold");
         }
     }

@@ -1,6 +1,10 @@
-﻿@inject IStringLocalizer<Login> localizer
+﻿@using Microsoft.AspNetCore.Localization
+@inject IStringLocalizer<Login> localizer
 @inject IJSRuntime JS
 @inject NavigationManager UriHelper
+@inject Queries graphQLQueries
+@inject CurrentUser currentUser
+@inject NavigationManager navManager;
 
 @code {
     public string Email { get; set; } = string.Empty;
@@ -8,7 +12,7 @@
     public bool RememberMe { get; set; } = false;
 
     private string errorMessage = string.Empty;
-    private string _language = string.Empty;
+    private string _language = CultureInfo.CurrentCulture.ToString();
     private string selectedLanguage
     {
         get
@@ -29,16 +33,29 @@
         }
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        //selectedLanguage = await JS.InvokeAsync<string>("getLanguage");
-    }
-
     public async void SignIn()
     {
         if (ValidateForm())
         {
-
+            var userDetails = graphQLQueries.RunSelectUserWhere(new SelectUserWhereArgs
+            {
+                email = Email,
+                password = Password
+            });
+            if (userDetails != null)
+            {
+                currentUser.Id = userDetails.id;
+                currentUser.FirstName = userDetails.first_name;
+                currentUser.LastName = userDetails.last_name;
+                currentUser.Roles = userDetails.roles;
+                currentUser.IsLoggedIn = true;
+                navManager.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = localizer["Invalid credentials"];
+                await JS.InvokeVoidAsync("SwalFireError", localizer["Ops! An error has occured!"].ToString(), localizer["Okey, got it!"].ToString());
+            }
         }
         else
         {

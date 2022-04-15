@@ -1,4 +1,5 @@
 using Client.Data;
+using Client.Services;
 using Client.Services.GraphQL;
 using Client.Services.Localization;
 using GraphQL;
@@ -18,6 +19,8 @@ builder.Services.AddScoped<GraphQLClient>(_ => new GraphQLClient("https://graphq
     headers["x-hasura-admin-secret"] = Environment.GetEnvironmentVariable("HasuraSecret");
 }));
 builder.Services.AddScoped<Mutations>();
+builder.Services.AddScoped<Queries>();
+builder.Services.AddScoped<CurrentUser>();
 
 var app = builder.Build();
 
