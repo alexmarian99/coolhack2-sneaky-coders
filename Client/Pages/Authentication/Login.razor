@@ -1,11 +1,46 @@
 ﻿@inject IStringLocalizer<Login> localizer
 @inject IJSRuntime JS
+@inject NavigationManager UriHelper
 
 @code {
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public bool RememberMe { get; set; } = false;
-    public string errorMessage = string.Empty;
+
+    private string errorMessage = string.Empty;
+    private string _language = string.Empty;
+    private string selectedLanguage
+    {
+        get
+        {
+            return _language;
+        }
+        set
+        {
+            if (value != _language)
+            {
+                Console.WriteLine(value);
+                if (!string.IsNullOrEmpty(_language))
+                {
+                    UriHelper.NavigateTo($"/Culture/{value}", true);
+                }
+                _language = value;
+            }
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        selectedLanguage = await JS.InvokeAsync<string>("getLanguage");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initSelect2", "country", localizer["Select language"]);
+        }
+    }
 
     public async void SignIn()
     {
@@ -64,6 +99,15 @@
     <div class="mb-20">
         <h3>@localizer["Sign in"]</h3>
         <p class="opacity-60 font-weight-bold">@localizer["Please enter account details to log in in control panel"]</p>
+        <div class="form-group row">
+            <div class=" col-lg-4 col-md-9 col-sm-12">
+                <select class="form-control select2" id="country" name="param" @bind="@selectedLanguage" @bind:event="onchange">
+                    <option value="en">@localizer["English"]</option>
+                    <option value="ro">@localizer["Romanian"]</option>
+                    <option value="uk">@localizer["Ukrainian"]</option>
+                </select>
+            </div>
+        </div>
     </div>
     @if (!string.IsNullOrEmpty(errorMessage))
     {

@@ -8,5 +8,9 @@ function releaseHold() {
 
 // Get current language of website
 function getLanguage() {
-    return navigator.language || navigator.userLanguage || 'en';
+    return navigator.userLanguage || navigator.language  || 'en';
+}
+
+function setLanguage(language) {
+    navigator.userLanguage = language;
 }

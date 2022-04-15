@@ -85,4 +85,9 @@ var KTLogin = function() {
 // Class Initialization
 jQuery(document).ready(function() {
     KTLogin.init();
+
+    $('#kt_select2_10').select2({
+        placeholder: "Select language",
+        minimumResultsForSearch: Infinity
+    });
 });
