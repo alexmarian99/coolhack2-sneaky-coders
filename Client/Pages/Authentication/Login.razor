@@ -19,27 +19,27 @@
     </div>
     <form class="form" id="kt_login_signin_form">
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder="Email" name="username" autocomplete="off" />
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder=@localizer["Email"] name="username" autocomplete="off" />
         </div>
         <div class="form-group">
-            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="password" placeholder="Password" name="password" />
+            <input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="password" placeholder=@localizer["Password"] name="password" />
         </div>
         <div class="form-group d-flex flex-wrap justify-content-between align-items-center px-8">
             <div class="checkbox-inline">
                 <label class="checkbox checkbox-outline checkbox-white text-white m-0">
                     <input type="checkbox" name="remember" />
-                    <span></span>Remember me
+                    <span></span>@localizer["Remember me"]
                 </label>
             </div>
-            <a href="javascript:;" id="kt_login_forgot" class="text-white font-weight-bold">Forget Password ?</a>
+            <a href="javascript:;" id="kt_login_forgot" class="text-white font-weight-bold">@localizer["Forget Password ?"]</a>
         </div>
         <div class="form-group text-center mt-10">
-            <button id="kt_login_signin_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3">Sign In</button>
+            <button id="kt_login_signin_submit" class="btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3">@localizer["Sign In"]</button>
         </div>
     </form>
     <div class="mt-10">
-        <span class="opacity-70 mr-4">Don't have an account yet?</span>
-        <a href="javascript:;" id="kt_login_signup" class="text-white font-weight-bold">Sign Up</a>
+        <span class="opacity-70 mr-4">@localizer["Don't have an account yet?"]</span>
+        <a href="javascript:;" id="kt_login_signup" class="text-white font-weight-bold">@localizer["Sign Up"]</a>
     </div>
 </div>
 <!--end::Login Sign in form-->
