@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./auth-hook --file ./auth-hook/Dockerfile --tag authHook:$(date +%s)
+      run: docker build ./auth-hook --file ./auth-hook/Dockerfile --tag auth-hook:$(date +%s)
