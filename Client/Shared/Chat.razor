@@ -42,6 +42,7 @@
         {
             chatService.TranslateUserMessagesToAsync(currentUser.Id, CultureInfo.CurrentCulture.ToString());
         }
+        this.StateHasChanged();
     }
 }
 
