@@ -1,10 +1,10 @@
-﻿using GoogleTranslateFreeApi;
+﻿using GTranslate.Translators;
 
 namespace Client.Services
 {
     public class ChatService
     {
-        private GoogleTranslator translator = new GoogleTranslator();
+        private GoogleTranslator translator = new AggregateTranslator();
         public List<Message> Room1 { get; set; } = new List<Message>();
         public Action OnMessage { get; set; }
 
@@ -16,19 +16,19 @@ namespace Client.Services
 
         public async Task TranslateUserMessagesToAsync(int userId, string culture)
         {
-            Language from = Language.Auto;
-            Language to;
+
+            string to = string.Empty;
             if (culture == "en")
-                to = Language.English;
+                to = "English";
             else if (culture == "ro")
-                to = Language.Romanian;
+                to = "Romanian";
             else
-                to = Language.Ukrainian;
+                to = "Ukrainian";
             foreach (var message in Room1)
             {
                 if (message.AuthorId != userId)
                 {
-                    message.TranslatedMessage = (await translator.TranslateLiteAsync(message.Text, from, to)).MergedTranslation;
+                    message.TranslatedMessage = (await translator.TranslateAsync(message.Text, to)).Translation;
                     message.TranslatedCulture = culture;
                     OnMessage?.Invoke();
                 }
