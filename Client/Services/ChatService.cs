@@ -4,7 +4,7 @@ namespace Client.Services
 {
     public class ChatService
     {
-        private GoogleTranslator translator = new AggregateTranslator();
+        private AggregateTranslator translator = new AggregateTranslator();
         public List<Message> Room1 { get; set; } = new List<Message>();
         public Action OnMessage { get; set; }
 
