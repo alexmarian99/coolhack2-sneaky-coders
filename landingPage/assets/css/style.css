@@ -1773,7 +1773,7 @@ textarea {
         Navbar    
 =========================================*/
 .navbar {
-  height: 6rem;
+  height: 7rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1794,11 +1794,11 @@ textarea {
   .navbar a {
     font-family: "poppins-Bold"; }
   .navbar .logo {
-    height: 2rem;
+    height: 7rem;
   }
     @media screen and (max-width: 576px) {
       .navbar .logo {
-        height: 1.6rem; } }
+        height: 4rem; } }
   @media screen and (max-width: 992px) {
     .navbar .navbar-menu {
       display: none; } }
