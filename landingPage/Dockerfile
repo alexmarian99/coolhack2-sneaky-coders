@@ -1,4 +1,3 @@
 FROM httpd:2.4
-MAINTAINER shanky@adamtheautomator.com
-COPY . /var/www/html/
+COPY . /usr/local/apache2/htdocs
 EXPOSE 80
