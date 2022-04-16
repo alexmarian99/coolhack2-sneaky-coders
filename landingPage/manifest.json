@@ -1,0 +1,26 @@
+{
+    "short_name": "HelpUkraine",
+    "name": "HelpUkraine",
+    "icons": [
+      {
+        "src": "/images/logoApp.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "/images/smallApp.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/images/logoApp.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#8d33d6",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#337ad6"
+  }
