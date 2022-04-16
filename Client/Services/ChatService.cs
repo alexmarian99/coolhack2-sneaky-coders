@@ -24,7 +24,8 @@ namespace Client.Services
                 to = "Romanian";
             else
                 to = "Ukrainian";
-            foreach (var message in Room1)
+            var needTranslations = Room1.Where(x => x.TranslatedCulture != culture);
+            foreach (var message in needTranslations)
             {
                 if (message.AuthorId != userId)
                 {
