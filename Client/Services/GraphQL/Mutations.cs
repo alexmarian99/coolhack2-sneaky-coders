@@ -19,7 +19,7 @@ namespace Client.Services.GraphQL
             args.password = SHAClass.ComputeSha256Hash(args.password);
             var result = _graphql.Query(InsertUser.Query, args);
             dynamic response = JsonConvert.DeserializeObject(result.Raw);
-            if (!response.data.insert_users.returning[0])
+            if (response.data.insert_users.returning.Count == 0)
                 return null;
             return response.data.insert_users.returning[0] as InsertUserResult;
         }

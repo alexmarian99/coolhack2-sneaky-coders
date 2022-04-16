@@ -1,75 +1,88 @@
-﻿@page "/add/user"
+﻿@page "/users/add"
 @inject IStringLocalizer<AddUser> localizer
-@inject Queries graphQLQueries
-@inject IJSRuntime JS
-
-
-<h3>Add User</h3>
+@inject Mutations graphQLMutations
+@inject NavigationManager navManager
 
 @code {
+    private string Firstname { get; set; }
+    private string Lastname { get; set; }
+    private string PhoneNumber { get; set; }
+    private string Email { get; set; }
+    private string Password { get; set; }
 
+    public void CreateUser()
+    {
+        graphQLMutations.RunInsertUser(new InsertUserArgs
+        {
+            first_name = Firstname,
+            last_name = Lastname,
+            email = Email,
+            phone_number = PhoneNumber,
+            password = Password
+        });
+        navManager.NavigateTo("/users/all");
+    }
 }
 
-
-<div class="card card-custom">
- <div class="card-header">
-  <h3 class="card-title">
-  Add user
-  </h3>
- </div>
- <!--begin::Form-->
- <form>
-  <div class="card-body">
-   <div class="form-group mb-8">
-    <div class="alert alert-custom alert-default" role="alert">
-     <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
-     <div class="alert-text">
-        Thank you for adding a new member to our community 
-     </div>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+        <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <!--begin::Info-->
+            <div class="d-flex align-items-center flex-wrap mr-1">
+                <!--begin::Page Heading-->
+                <div class="d-flex align-items-baseline flex-wrap mr-5">
+                    <!--begin::Page Title-->
+                    
+                    <!--end::Page Title-->
+                </div>
+                <!--end::Page Heading-->
+            </div>
+            <!--end::Info-->
+        </div>
     </div>
-   </div>
-   <div class="form-group">
-    <label>Email address</label>
-    <input type="email" class="form-control"  placeholder="Enter email"/>
-    <span class="form-text text-muted">We'll never share your email with anyone else.</span>
-   </div>
-   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
-   </div>
-   <div class="form-group">
-    <label>Static:</label>
-    <p class="form-control-plaintext text-muted">email@example.com</p>
-   </div>
-   <div class="form-group">
-    <label for="exampleSelect1">Example select</label>
-    <select class="form-control" id="exampleSelect1">
-     <option>1</option>
-     <option>2</option>
-     <option>3</option>
-     <option>4</option>
-     <option>5</option>
-    </select>
-   </div>
-   <div class="form-group">
-    <label for="exampleSelect2">Example multiple select</label>
-    <select multiple="" class="form-control" id="exampleSelect2">
-     <option>1</option>
-     <option>2</option>
-     <option>3</option>
-     <option>4</option>
-     <option>5</option>
-    </select>
-   </div>
-   <div class="form-group mb-1">
-    <label for="exampleTextarea">Example textarea</label>
-    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-   </div>
-  </div>
-  <div class="card-footer">
-   <button type="reset" class="btn btn-primary mr-2">Submit</button>
-   <button type="reset" class="btn btn-secondary">Cancel</button>
-  </div>
- </form>
- <!--end::Form-->
+    <!--end::Subheader-->
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class="container">
+            <!--begin::Card-->
+            <div class="card card-custom">
+                <div class="card-header">
+                    <div class="card-toolbar">
+                        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">@localizer["Create new user"]</h2>
+                    </div>
+                </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>@localizer["First name"]</label>
+                            <input type="text" class="form-control" placeholder="@localizer["Enter first name of user"]" @bind="Firstname" @bind:event="onchange" />
+                        </div>
+                        <div class="form-group">
+                            <label>@localizer["Last name"]</label>
+                            <input type="text" class="form-control" placeholder="@localizer["Enter last name of user"]" @bind="Lastname" @bind:event="onchange" />
+                        </div>
+                        <div class="form-group">
+                            <label>@localizer["Phone number"]</label>
+                            <input type="text" class="form-control" placeholder="@localizer["Enter phone number of user"]" @bind="PhoneNumber" @bind:event="onchange" />
+                        </div>
+                        <div class="form-group">
+                            <label>@localizer["Email address"]</label>
+                            <input type="email" class="form-control" placeholder="@localizer["Enter email"]" @bind="Email" @bind:event="onchange" />
+                            <span class="form-text text-muted">@localizer["We'll never share your email with anyone else."]</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">@localizer["Password"]</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="@localizer["Password"]" @bind="Password" @bind:event="onchange" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button @onclick="CreateUser" class="btn btn-primary mr-2">@localizer["Submit"]</button>
+                        <button type="reset" class="btn btn-secondary">@localizer["Cancel"]</button>
+                    </div>
+                <!--end::Form-->
+            </div>
+        </div>
+    </div>
+    <!--end::Card-->
 </div>
+<!--end::Container-->
