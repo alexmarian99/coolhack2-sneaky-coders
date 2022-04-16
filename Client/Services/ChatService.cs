@@ -1,7 +1,10 @@
-﻿namespace Client.Services
+﻿using GoogleTranslateFreeApi;
+
+namespace Client.Services
 {
     public class ChatService
     {
+        private GoogleTranslator translator = new GoogleTranslator();
         public List<Message> Room1 { get; set; } = new List<Message>();
         public Action OnMessage { get; set; }
 
@@ -9,6 +12,27 @@
         {
             Room1.Add(arg);
             OnMessage?.Invoke();
+        }
+
+        public async Task TranslateUserMessagesToAsync(int userId, string culture)
+        {
+            Language from = Language.Auto;
+            Language to;
+            if (culture == "en")
+                to = Language.English;
+            else if (culture == "ro")
+                to = Language.Romanian;
+            else
+                to = Language.Ukrainian;
+            foreach (var message in Room1)
+            {
+                if (message.AuthorId != userId)
+                {
+                    message.TranslatedMessage = (await translator.TranslateLiteAsync(message.Text, from, to)).MergedTranslation;
+                    message.TranslatedCulture = culture;
+                    OnMessage?.Invoke();
+                }
+            }
         }
     }
 

@@ -2,7 +2,8 @@
 @inject CurrentUser currentUser
 
 @code {
-    public Message[] chatMessages;
+    private Message[] chatMessages;
+    private bool Translated = false;
 
     public string textboxValue { get; set; }
 
@@ -33,6 +34,15 @@
             });
         textboxValue = string.Empty;
     }
+
+    void SwitchTranslate()
+    {
+        Translated = !Translated;
+        if (!chatMessages.Any(x => x.TranslatedCulture == CultureInfo.CurrentCulture.ToString()))
+        {
+            chatService.TranslateUserMessagesToAsync(currentUser.Id, CultureInfo.CurrentCulture.ToString());
+        }
+    }
 }
 
 <!--begin::Chat Panel-->
@@ -46,7 +56,7 @@
                     <div class="text-left flex-grow-1">
                         <!--begin::Dropdown Menu-->
                         <div class="dropdown dropdown-inline">
-                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button @onclick="SwitchTranslate" type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="svg-icon svg-icon-lg">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -114,7 +124,16 @@
                                                     <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">@message.FirstName @message.LastName</a>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">@message.Text</div>
+                                            <div class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">
+                                                @if (Translated)
+                                                {
+                                                    @message.TranslatedMessage
+                                                }
+                                                else
+                                                {
+                                                    @message.Text
+                                                }
+                                            </div>
                                         </div>
                                         <!--end::Message In-->
                                     }
