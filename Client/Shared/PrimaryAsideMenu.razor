@@ -18,7 +18,7 @@
         <ul class="nav flex-column" role="tablist">
             <!--begin::Item-->
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="@localizer["Apps"]">
-                <a href="/" class="nav-link btn btn-icon btn-clean btn-lg active" data-toggle="tab" data-target="#kt_aside_tab_1" role="tab">
+                <a href="/" class="nav-link btn btn-icon btn-clean btn-lg">
                     <span class="svg-icon svg-icon-xl">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -35,7 +35,7 @@
             <!--end::Item-->
             <!--begin::Item-->
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="@localizer["Users"]">
-                <a href="#" class="nav-link btn btn-icon btn-clean btn-lg" data-toggle="tab" data-target="#kt_aside_tab_2" role="tab">
+                <a href="/users/all" class="nav-link btn btn-icon btn-clean btn-lg">
                     <span class="svg-icon svg-icon-xl">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -147,6 +147,24 @@
             <span class="label label-sm label-light-danger label-rounded font-weight-bolder position-absolute top-0 right-0 mt-1 mr-1">3</span>
         </a>
         <!--end::Quick Panel-->
+        <!--begin::Chat-->
+        <a href="javascript:;" class="btn btn-icon btn-clean btn-lg w-40px h-40px" data-toggle="modal" data-target="#kt_chat_modal" title="@localizer["Talk with an administrator"]">
+            <span class="symbol symbol-30 symbol-lg-40">
+                <span class="svg-icon svg-icon-xl">
+                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                            <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                <!--<span class="symbol-label font-size-h5 font-weight-bold">S</span>-->
+            </span>
+        </a>
+        <!--end::Chat-->
         <!--begin::User-->
         <a href="#" class="btn btn-icon btn-clean btn-lg w-40px h-40px" id="kt_quick_user_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="@localizer["User profile"]">
             <span class="symbol symbol-30 symbol-lg-40">

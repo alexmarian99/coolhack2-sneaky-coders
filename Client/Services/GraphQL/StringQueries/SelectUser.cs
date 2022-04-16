@@ -1,7 +1,31 @@
 ﻿namespace Client.Services.GraphQL.StringQueries
 {
-    public class SelectUser
+    public class SelectAllUser
     {
+        public static string Query = @"
+            query SelectAllUsers {
+              users {
+                id
+                first_name
+                last_name
+                email
+                phone_number
+                roles {
+                  role_name
+                }
+              }
+            }
+            ";
+    }
+
+    public class SelectAllUsersResult
+    {
+        public string id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string email { get; set; }
+        public string phone_number { get; set; }
+        public List<string> Roles { get; set; }
     }
 
     public class SelectUserWhere

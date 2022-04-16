@@ -32,5 +32,30 @@ namespace Client.Services.GraphQL
                 roles = roleLists
             };
         }
+
+        public List<SelectAllUsersResult> RunSelectAllUsers()
+        {
+            var resultList = new List<SelectAllUsersResult>();
+            var result = _graphql.Query(SelectAllUser.Query);
+            dynamic response = JsonConvert.DeserializeObject(result.Raw);
+            foreach (var user in response.data.users)
+            {
+                var roleList = new List<string>();
+                foreach (var role in user.roles)
+                {
+                    roleList.Add(role.role_name);
+                }
+                resultList.Add(new SelectAllUsersResult
+                {
+                    id = user.id,
+                    first_name = user.first_name,
+                    last_name = user.last_name,
+                    email = user.email,
+                    phone_number = user.phone_number,
+                    Roles = roleList
+                });
+            }
+            return resultList;
+        }
     }
 }
