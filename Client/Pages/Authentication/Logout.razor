@@ -1,0 +1,14 @@
+﻿@page "/logout"
+@inject IJSRuntime JS
+@inject NavigationManager navManager
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("KTCookie.setCookie", "helpukraineUser", "");
+            navManager.NavigateTo("/auth");
+        }
+    }
+}

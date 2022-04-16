@@ -21,6 +21,7 @@ builder.Services.AddScoped<GraphQLClient>(_ => new GraphQLClient("https://graphq
 builder.Services.AddScoped<Mutations>();
 builder.Services.AddScoped<Queries>();
 builder.Services.AddScoped<CurrentUser>();
+builder.Services.AddSingleton<ChatService>();
 
 var app = builder.Build();
 
