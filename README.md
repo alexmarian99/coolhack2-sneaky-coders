@@ -1,1 +1,1 @@
-# coolhack-sneaky-coders
+Project presented for CoolHack ( Hackaton at Codecool )
